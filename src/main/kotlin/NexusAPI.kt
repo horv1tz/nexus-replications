@@ -1,4 +1,4 @@
-package ru.cib
+package com.dvorfs
 
 import okhttp3.OkHttpClient
 import okhttp3.Request

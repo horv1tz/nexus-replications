@@ -1,4 +1,4 @@
-package ru.cib
+package com.dvorfs
 
 fun main() {
     val nexus = NexusAPI()
