@@ -4,10 +4,13 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.sink
 import java.io.File
+import io.github.cdimascio.dotenv.dotenv
 
 class NexusAPI {
-    val ENDPOINT = "https://packages.dvorfs.com"
-    val NXTOKEN = "0.915381105509447"
+    val nexusdotenv = dotenv()
+
+    val ENDPOINT = nexusdotenv["ENDPOINT"]
+    val NXTOKEN = nexusdotenv["NXTOKEN"]
     val client = OkHttpClient()
 
     // Получение списка всех репозиториев
