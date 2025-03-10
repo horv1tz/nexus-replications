@@ -2,23 +2,22 @@ package com.dvorfs
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okio.sink
 import java.io.File
 import io.github.cdimascio.dotenv.dotenv
 
 class NexusAPI {
-    val nexusdotenv = dotenv()
+    private val nexusdotenv = dotenv()
 
-    val ENDPOINT = nexusdotenv["ENDPOINT"]
-    val NXTOKEN = nexusdotenv["NXTOKEN"]
-    val client = OkHttpClient()
+    private val endPoint = nexusdotenv["ENDPOINT"]
+    private val nxToken = nexusdotenv["NXTOKEN"]
+    private val client = OkHttpClient()
 
     // Получение списка всех репозиториев
     fun getAllRepositories(): String? {
         val request = Request.Builder()
-            .url("${ENDPOINT}/service/rest/v1/repositories")
+            .url("${endPoint}/service/rest/v1/repositories")
             .addHeader("accept", "application/json")
-            .addHeader("NX-ANTI-CSRF-TOKEN", NXTOKEN)
+            .addHeader("NX-ANTI-CSRF-TOKEN", nxToken)
             .build()
 
         client.newCall(request).execute().use { response ->
@@ -33,9 +32,9 @@ class NexusAPI {
     // Получение всех артифактов в репозитории
     fun getAllComponentsInRepository(repository: String?): String? {
         val request = Request.Builder()
-            .url("${ENDPOINT}/service/rest/v1/components?repository=${repository}")
+            .url("${endPoint}/service/rest/v1/components?repository=${repository}")
             .addHeader("accept", "application/json")
-            .addHeader("NX-ANTI-CSRF-TOKEN", NXTOKEN)
+            .addHeader("NX-ANTI-CSRF-TOKEN", nxToken)
             .build()
 
         client.newCall(request).execute().use { response ->
@@ -50,8 +49,8 @@ class NexusAPI {
     // Скачивание компонента
     private fun downloadComponent(path: String, outputFileName: String) {
         val request = Request.Builder()
-            .url("${ENDPOINT}${path}")
-            .addHeader("NX-ANTI-CSRF-TOKEN", NXTOKEN)
+            .url("${endPoint}${path}")
+            .addHeader("NX-ANTI-CSRF-TOKEN", nxToken)
             .build()
 
         client.newCall(request).execute().use { response ->
